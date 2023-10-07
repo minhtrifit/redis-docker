@@ -8,6 +8,7 @@ services:
       - redis_volume_data:/data
     ports:
       - 6379:6379
+
   redis_insight:
     image: redislabs/redisinsight:latest
     container_name: redis_insight
@@ -16,6 +17,16 @@ services:
       - 8001:8001
     volumes:
       - redis_insight_volume_data:/db
+
+  app-server:
+    build: '.\golang 2\'
+    image: golang-server
+    ports:
+      - 5000:5000
+    environment:
+      REDIS_URL: redis
+      PORT: 5000
+
 volumes:
   redis_volume_data:
   redis_insight_volume_data:
